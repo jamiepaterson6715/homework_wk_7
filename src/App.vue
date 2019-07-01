@@ -1,28 +1,46 @@
-<template>
+<template lang="html">
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <launch-detail :launch="selectedLaunch"></launch-detail> -->
+    <router-view :launches="launches"></router-view>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import {eventBus} from "./main.js";
+// import LaunchDetail from "./LaunchDetail.vue"
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      launches: [],
+      // selectedLaunch: [],
+    }
+  },
+  mounted(){
+  fetch('https://api.spacexdata.com/v3/launches')
+  .then(res => res.json())
+  .then(data => this.launches = data)
+  // console.log(this.launches)
+  // eventBus.$on('launch-selected', (launch) =>{
+  //   this.selectedLaunch = launch
+  //
+  // })
 }
+
+// components : {
+//   "launch-detail": LaunchDetail
+}
+
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+	background: rgba(0,0,0,0.8);
+	margin: 0;
+	color: #fff;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>
